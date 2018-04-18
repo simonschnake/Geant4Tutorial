@@ -165,6 +165,32 @@ void TutorialApplication::FinishRun() {
 
 //______________________________________________________________________________
 void TutorialApplication::ConstructMaterials() {
+
+  /*
+    Defining the necessary ingredience for our detector
+   */
+  TGeoElementTable *table = gGeoManager->GetElementTable();
+  TGeoElement *Fe  = table->FindElement("IRON");
+  TGeoElement *Cr  = table->FindElement("CHROMIUM");
+  TGeoElement *Ni  = table->FindElement("NICKEL");
+  TGeoElement *Si  = table->FindElement("SILICON");
+  TGeoElement *C  = table->FindElement("CARBON");
+  TGeoElement *Cu  = table->FindElement("COPPER");
+  TGeoElement *Zn  = table->FindElement("ZINC");
+  TGeoElement *H  = table->FindElement("HYDROGEN");
+
+  TGeoMixture *steel_mix = new TGeoMixture("steel", 3, 7.86);
+  // just a approximation of the composition
+  steel_mix->AddElement(Fe, 0.7);
+  steel_mix->AddElement(Cr, 0.2);
+  steel_mix->AddElement(Ni, 0.1);
+  gGeoManager->AddMaterial(steel_mix);
+
+  TGeoMixture *brass_mix = new TGeoMixture("brass", 2, 8.53);
+  brass_mix->AddElement(Cu, 0.7);
+  brass_mix->AddElement(Zn, 0.3);
+  gGeoManager->AddMaterial(brass_mix);
+
   /*
   TGeoElementTable *table = gGeoManager->GetElementTable();
   TGeoElement *N  = table->FindElement("NITROGEN");
@@ -273,6 +299,10 @@ void TutorialApplication::ConstructMaterials() {
   gGeoManager->Medium("Scintillator", 6, imatSci, 0, ifield, fieldm, tmaxfd,
                       stemax, deemax, epsil, stmin);
   gGeoManager->Medium("Cu", 7, imatCu, 0, ifield, fieldm, tmaxfd, stemax,
+                      deemax, epsil, stmin);
+  gGeoManager->Medium("Steel", 8, steel_mix->GetIndex(), 0, ifield, fieldm, tmaxfd, stemax,
+                      deemax, epsil, stmin);
+  gGeoManager->Medium("Brass", 9, brass_mix->GetIndex(), 0, ifield, fieldm, tmaxfd, stemax,
                       deemax, epsil, stmin);
   // gGeoManager->Medium("Air", 8, imatAir,
   //		      0, ifield, fieldm, tmaxfd, stemax, deemax, epsil, stmin);

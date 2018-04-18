@@ -1,4 +1,4 @@
-/* Definition of a sampling calorimetr 
+/* Definition of a sampling calorimeter
     consisting of an absorber (Fe or Pb) and and an active material
     scaled size in terms of average hadronic interaction lengh
 */
@@ -22,22 +22,22 @@ void SamplingCalorimeter
   //std::cout << "lambdas:" << lambda_i_Scint << ", " <<  lambda_i_Abs << std::endl;
   // calculate size of calorimeter in terms of combined interaction length
   Double_t offsetX      = 0.0;
-  Double_t exphXYZ[3]   = {comb_lambda_i*2*f,comb_lambda_i*f,comb_lambda_i*f}; 
+  Double_t exphXYZ[3]   = {comb_lambda_i*2*f,comb_lambda_i*f,comb_lambda_i*f};
 
   Double_t layer1XYZ[3] = {width1 / 2, exphXYZ[1], exphXYZ[2]};
   Double_t layer2XYZ[3] = {width2 / 2, exphXYZ[1], exphXYZ[2]};
-  
+
   Double_t* ubuf(0);
-  
-  // experimental hall, "world volume"  
+
+  // experimental hall, "world volume"
   TGeoVolume* top = gGeoManager->MakeBox("EXPH",medVac,exphXYZ[0],exphXYZ[1],exphXYZ[2]);
   gGeoManager->SetTopVolume(top);
 
   // box for  layer
   TGeoVolume* layer = gGeoManager->MakeBox("Layer",medVac,0.5*(width1+width2), exphXYZ[1], exphXYZ[2]);
   //boxes for absorber and scintillator
-  TGeoVolume* abs = gGeoManager->MakeBox("ABS",medAbs, 0.5* width1, exphXYZ[1], exphXYZ[2]); 
-  TGeoVolume* sci = gGeoManager->MakeBox("SCI",medSci, 0.5* width2, exphXYZ[1], exphXYZ[2]); 
+  TGeoVolume* abs = gGeoManager->MakeBox("ABS",medAbs, 0.5* width1, exphXYZ[1], exphXYZ[2]);
+  TGeoVolume* sci = gGeoManager->MakeBox("SCI",medSci, 0.5* width2, exphXYZ[1], exphXYZ[2]);
   //construct layer
   layer->AddNode(abs, 0,new TGeoTranslation(-width2/2,0,0));
   layer->AddNode(sci, 1,new TGeoTranslation(width1/2,0,0));
@@ -62,6 +62,6 @@ void SamplingCalorimeter
     gGeoManager->Volume(ss2.str().c_str(),"BOX",indSci,layer2XYZ,3);
     gGeoManager->Node(ss2.str().c_str(),1,"EXPH",x,0.,0.,0,kTRUE,ubuf);
     x+=layer2XYZ[0];
-  } 
-  */ 
+  }
+  */
 }

@@ -1,0 +1,32 @@
+ $Id: README 544 2007-05-23 10:39:11Z ivana $ 
+
+------------------------------------------------------------------------
+ The documentation file for the Virtual Geometry Model examples
+ Copyright (C) 2007, Ivana Hrivnacova               
+ All rights reserved. 
+           
+ For the licensing terms see vgm/LICENSE.
+ Contact: ivana@ipno.in2p3.fr
+------------------------------------------------------------------------
+
+ README
+ -------
+
+ The examples demonstrate use of VGM for conversion
+ of existing native geometries
+ (Geant4 novice example N03, root rootgeom.C)
+ 
+ E01:  Geant4 -> Root
+ E02:  Root   -> Geant4
+ E03:  Geant4 -> XML 
+ E04:  Root   -> XML 
+ 
+ 
+ The source for all examples can be installed from this directory using
+ the provided install script:
+ ./install_sources.sh
+ 
+ The script install.sh will install sources and compile examples
+ using the G4 based GNUmakefiles. 
+ 
+ 
