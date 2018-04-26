@@ -59,8 +59,7 @@ void tracker2(double pos1 = -45.0, double pos2 = -30,double pos3 = 45.0, double 
   layer->AddNode(struc,0,new TGeoTranslation(-structureXYZ[0]-thickness/2,0,0));
   layer->AddNode(silayer,1,new TGeoTranslation(0,0,0));
   layer->AddNode(struc,2,new TGeoTranslation(structureXYZ[0]+thickness/2,0,0));
-
-
+  
   for(int i = 0 ; i < 3 ; ++i) {
     top->AddNode(layer,i,new TGeoTranslation(layerpos[i],0,0));
   }

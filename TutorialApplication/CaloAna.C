@@ -8,22 +8,23 @@ void CaloAna()
   // load hepler scripts
   gROOT->ProcessLine(".L CountChargedinScint.C+O");
   gROOT->ProcessLine(".L XofFirstSecondary.C+");
-
-// initialize geometry: volumes and materials of a Sampling Calorimeter
-  Double_t AbsWid=2.;         //Absorber width
-  Double_t SciWid=1.;         //Scintillator width,
-  Double_t SizeFact=0.7;      //size of the calorimeter in interaction lengths labmda_I, 4.
-  Int_t IMat=1;               //material 1:Pb 2:Fe
-  TString geom("geometry/SamplingCalorimeter(");
-  geom+=AbsWid; geom.Append(",");
-  geom+=SciWid; geom.Append(",");
-  geom+=SizeFact; geom.Append(",");
-  geom+=IMat; geom.Append(")");
-  app->InitMC(geom);
-  // xxx app->InitMC("geometry/SamplingCalorimeter(2.,1.,2.,1)");
-
-// Book histogram(s)
- // for shower analyis
+  
+  // initialize geometry: volumes and materials of a Sampling Calorimeter
+  // Double_t AbsWid=2.;         //Absorber width
+  // Double_t SciWid=1.;         //Scintillator width,
+  // Double_t SizeFact=0.7;      //size of the calorimeter in interaction lengths labmda_I, 4.
+  // Int_t IMat=1;               //material 1:Pb 2:Fe
+  // TString geom("geometry/SamplingCalorimeter(");
+  // geom+=AbsWid; geom.Append(",");
+  // geom+=SciWid; geom.Append(",");
+  // geom+=SizeFact; geom.Append(",");
+  // geom+=IMat; geom.Append(")");
+  // app->InitMC(geom);
+  //  app->InitMC("geometry/SamplingCalorimeter(2.,1.,2.,1)");
+  app->InitMC("geometry/toyCalorimeter()");
+  
+  // Book histogram(s)
+  // for shower analyis
   TH1F* hx  = new TH1F("hx","starting point of shower",100, 0.,25.);
   hx->SetYTitle("# of entries");
   hx->SetXTitle("x of first vertex [cm]");
@@ -46,10 +47,10 @@ void CaloAna()
   TH1F* hhelp; // for analysis of internal histograms
   Double_t xp[1]={0.90},xq[1];
 
-  unsigned int nevt = 100; Int_t i;
-  double       p = 3.;
+  unsigned int nevt = 0; Int_t i;
+  double       p = 25.;
 
-  app->SetPrimaryPDG(-11);
+  app->SetPrimaryPDG(-211);
   /* PDG codes     22: Photon    +/-11: e+/-  +-13: muon
                +/-211: pion    +/-2212: proton              */
   app->SetPrimaryMomentum(p);
@@ -72,7 +73,7 @@ void CaloAna()
   }
 
   // events at different momenta
-  nevt = 100; p = 0.1;
+  nevt = 0; p = 0.1;
   double stepping = 9.9 / nevt;
   // generate a large number of events
   for(i=0;i<nevt;++i) {

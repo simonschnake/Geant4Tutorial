@@ -168,7 +168,7 @@ void TutorialApplication::ConstructMaterials() {
 
   /*
     Defining the necessary ingredience for our detector
-   */
+
   TGeoElementTable *table = gGeoManager->GetElementTable();
   TGeoElement *Fe  = table->FindElement("IRON");
   TGeoElement *Cr  = table->FindElement("CHROMIUM");
@@ -179,19 +179,22 @@ void TutorialApplication::ConstructMaterials() {
   TGeoElement *Zn  = table->FindElement("ZINC");
   TGeoElement *H  = table->FindElement("HYDROGEN");
 
+  // properties correctly set but not working
   TGeoMixture *steel_mix = new TGeoMixture("steel", 3, 7.86);
   // just a approximation of the composition
   steel_mix->AddElement(Fe, 0.7);
   steel_mix->AddElement(Cr, 0.2);
   steel_mix->AddElement(Ni, 0.1);
+  steel_mix->AverageProperties();
   gGeoManager->AddMaterial(steel_mix);
+
 
   TGeoMixture *brass_mix = new TGeoMixture("brass", 2, 8.53);
   brass_mix->AddElement(Cu, 0.7);
   brass_mix->AddElement(Zn, 0.3);
+  brass_mix->AverageProperties();
   gGeoManager->AddMaterial(brass_mix);
-
-  /*
+  
   TGeoElementTable *table = gGeoManager->GetElementTable();
   TGeoElement *N  = table->FindElement("NITROGEN");
   TGeoElement *O  = table->FindElement("OXYGEN");
@@ -275,7 +278,25 @@ void TutorialApplication::ConstructMaterials() {
   Int_t imatCu = 7;
   gGeoManager->Material("Cu", a, z, density, imatCu, radl, absl);
 
-  //
+  // Mixture steel    Aeff=55.3601 Zeff=25.8 rho=7.86 radlen=1.76978 intlen=16.9389
+  a = 55.3601;
+  z = 25.8;
+  density = 7.86;
+  radl = 1.76978;
+  absl = 16.9389;
+  Int_t imatSte = 8;
+  gGeoManager->Material("Steel", a, z, density, imatSte, radl, absl);
+  
+  // Mixture brass    Aeff=64.0992 Zeff=29.3 rho=8.53 radlen=1.49198 intlen=16.3852
+  a = 64.0992;
+  z = 29.3;
+  density = 8.53;
+  radl = 1.49198;
+  absl = 16.3852;
+  Int_t imatBra = 9;
+  gGeoManager->Material("Brass", a, z, density, imatBra, radl, absl);
+  // properties of brass and steel calculated with geant4
+  
   // TRACKING MEDIA
   //
   Int_t ifield = 0;         // No magnetic field
@@ -300,9 +321,9 @@ void TutorialApplication::ConstructMaterials() {
                       stemax, deemax, epsil, stmin);
   gGeoManager->Medium("Cu", 7, imatCu, 0, ifield, fieldm, tmaxfd, stemax,
                       deemax, epsil, stmin);
-  gGeoManager->Medium("Steel", 8, steel_mix->GetIndex(), 0, ifield, fieldm, tmaxfd, stemax,
+  gGeoManager->Medium("Steel", 8, imatSte, 0, ifield, fieldm, tmaxfd, stemax,
                       deemax, epsil, stmin);
-  gGeoManager->Medium("Brass", 9, brass_mix->GetIndex(), 0, ifield, fieldm, tmaxfd, stemax,
+  gGeoManager->Medium("Brass", 9, imatBra, 0, ifield, fieldm, tmaxfd, stemax,
                       deemax, epsil, stmin);
   // gGeoManager->Medium("Air", 8, imatAir,
   //		      0, ifield, fieldm, tmaxfd, stemax, deemax, epsil, stmin);
